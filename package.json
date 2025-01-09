@@ -1,0 +1,15 @@
+{
+  "name": "rres-stack-boilerplate",
+  "version": "1.0.0",
+  "description": "boilerplate for maddox's goated stack",
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --success=first \"npm run start:server\" \"npm run dev:client\"",
+    "start:server": "cd server && npm i && npm start",
+    "dev:client": "cd client && npm i && npm run dev",
+    "build:client": "cd frontend && npm i && npm run build"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

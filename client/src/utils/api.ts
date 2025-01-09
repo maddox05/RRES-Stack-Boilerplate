@@ -1,10 +1,9 @@
-import { show401Msg } from "@components/401/401Slice.js";
-import axios from "./axios.js";
+import axios from "./axios";
 import {
   hideFlashMessage,
   showFlashMessage,
-} from "@components/flashmessage/flashMessageSlice.js";
-import { startLoading, stopLoading } from "@src/app/store/loadingSlice.js";
+} from "../components/flashmessage/flashMessageSlice";
+import { startLoading, stopLoading } from "../store/loadingSlice";
 
 /**
  * A redux thunk standard api call THIS IS BASICALLY A MIDDLEWARE (idk how to make a real one yet) IF YOU ARE TALKING TO THE API PLS USE THIS
@@ -17,31 +16,20 @@ import { startLoading, stopLoading } from "@src/app/store/loadingSlice.js";
  * @param {Object} [options] - Additional options for the request.
  * @param {Array} [options.loadingComponent] - The name of the component to show while the request is in progress.
  * @param {String} [options.fetchHistory] - Do you want to add fetch history to state
- * @param {import('axios').AxiosRequestConfig} [options.axiosConfig] - Axios Config
+ * @param {AxiosRequestConfig} [options.axiosConfig] - Axios Config
  * @param {String} [options.errorMsg] - error message to be seen by user
  * @param {String} [options.noticeOfSuccess] - if given, will show a flash message with this message
+ * @param {Boolean} [options.hideError] - wanna hide error message? go for it
  * @returns {Function} dispatches an action to the reducer with a action.payload of the data
  */
 export function standardApiCall(
-  method,
-  route,
+  method: string,
+  route: string,
   data = null,
-  resultAction,
+  resultAction: string,
   options
 ) {
-  return async function (dispatch, getState) {
-    if (
-      (options?.fetchHistory && options?.fetchHistory === true) ||
-      method === "get"
-    ) {
-      const fetchHistory = getState().app.navbar.fetchHistory;
-      if (fetchHistory[route] !== undefined) {
-        // && doesWordContainNavbarKeyword(route)
-        return; //"same get route hit twice!"
-      }
-      dispatch(updateFetchHistory(route));
-    }
-
+  return async function (dispatch) {
     dispatch(startLoading(options?.loadingComponent));
     try {
       let result = null;
@@ -80,18 +68,13 @@ export function standardApiCall(
       console.error(error);
       dispatch(stopLoading(options?.loadingComponent));
       console.error("Failed req to ", error?.request?.responseURL);
-      if (error?.response?.status === 401) {
-        dispatch(signOut());
-        dispatch(hideFlashMessage());
-        dispatch(show401Msg());
-      } else {
-        dispatch(
-          showFlashMessage(
-            "message:",
-            error?.response?.data?.message || options?.errorMsg || error.message
-          )
-        );
-      }
+
+      dispatch(
+        showFlashMessage(
+          "message:",
+          error?.response?.data?.message || options?.errorMsg || error.message
+        )
+      );
     }
   };
 }

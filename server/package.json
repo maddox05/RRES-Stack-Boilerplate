@@ -2,9 +2,10 @@
   "main": "server.ts",
   "type": "module",
   "scripts": {
-    "start": "tsx --watch server.ts"
+    "start": "tsx watch server.ts"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "morgan": "^1.10.0",
@@ -14,5 +15,13 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
     "typescript": "^5.7.3"
+  },
+  "imports": {
+    "#models/*": "./models/*",
+    "#routes/*": "./routes/*",
+    "#db/*": "./database/*",
+    "#utils/*": "./utils/*",
+    "#config/*": "./config/*",
+    "#middleware/*": "./middleware/*"
   }
 }

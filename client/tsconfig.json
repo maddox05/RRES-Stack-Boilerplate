@@ -1,4 +1,15 @@
 {
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react",
+    "types": ["vite/client"],
+    "paths": {
+      "#components/*": ["src/components/*"],
+      "#src/*": ["./"],
+      "#utils/*": ["src/utils/*"]
+    }
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

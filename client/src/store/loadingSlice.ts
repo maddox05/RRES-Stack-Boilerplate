@@ -5,7 +5,7 @@ const DONE_LOADING = "store/DONE_LOADING";
  *
  * @param {Array} compsToLoad
  */
-export function setCompsLoading(compsToLoad) {
+export function setCompsLoading(compsToLoad: string[] | string) {
   return { type: LOADING, payload: compsToLoad };
 }
 
@@ -13,11 +13,11 @@ export function setCompsLoading(compsToLoad) {
  *
  * @param {Array} compsToUnLoad
  */
-export function setCompsUnLoading(compsToUnLoad) {
+export function setCompsUnLoading(compsToUnLoad: string[] | string) {
   return { type: DONE_LOADING, payload: compsToUnLoad };
 }
 
-function loadComps(state, toLoad, bool) {
+function loadComps(state: any, toLoad: string[] | string, bool: boolean) {
   let compsCopy = structuredClone(state.loadingComps);
   if (Array.isArray(toLoad)) {
     for (let i = 0; i < toLoad.length; i++) {

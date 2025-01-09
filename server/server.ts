@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { rateLimit } from "express-rate-limit";
 import morgan from "morgan";
 import bodyParser from "body-parser";
+import router from "./routes/route_list";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,11 +21,11 @@ app.use(
   })
 );
 
-app.use("/api", null); // put router here
+app.use("/api", router);
 
 app.get("/*", (req, res) => {
   res.redirect(process.env.FRONTEND_URL);
-});
+}); // for dev only
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");
