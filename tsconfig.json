@@ -12,6 +12,9 @@
     "noEmit": true,
     "moduleResolution": "Node",
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   }
 }
